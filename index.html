@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Widget</title>
+</head>
+<body>
+<h2>Chat Widget Integration</h2>
+
+<script>
+    (function() {
+        function getQueryParam(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        var botRefId = getQueryParam('botRefId') || 'defaultBotRefId';
+        var conversationId = getQueryParam('conversationId') || 'defaultConversationId';
+
+        var ns = document.createElement('script');
+        ns.src = 'https://chatapps-dev1.netomi.com/app/script.js';
+        ns.type = 'text/javascript';
+        ns.async = true;
+        ns.setAttribute('botRefId', botRefId);
+        ns.setAttribute('conversationId', conversationId);
+
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ns, s);
+
+        ns.onload = function () {
+            window.NETOMI_WEB_WIDGET.init(() => {
+                console.log("Widget Initialized with botRefId:", botRefId, "and conversationId:", conversationId);
+            });
+        };
+    })();
+</script>
+
+</body>
+</html>
