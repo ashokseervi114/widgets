@@ -15,15 +15,14 @@
             return urlParams.get(name);
         }
 
-        var botRefId = getQueryParam('botRefId') || 'defaultBotRefId';
+        var botRefId = getQueryParam('botRefId') || '6df31eba-d036-439c-8fea-4cd472f1ef88';
         var conversationId = getQueryParam('conversationId') || 'defaultConversationId';
 
         var ns = document.createElement('script');
-        ns.src = 'https://chatapps-dev1.netomi.com/app/script.js';
+        ns.src = 'https://chatapps-qa.netomi.com/app/script.js';
         ns.type = 'text/javascript';
         ns.async = true;
         ns.setAttribute('botRefId', botRefId);
-        ns.setAttribute('conversationId', conversationId);
 
         var s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(ns, s);
@@ -31,6 +30,11 @@
         ns.onload = function () {
             window.NETOMI_WEB_WIDGET.init(() => {
                 console.log("Widget Initialized with botRefId:", botRefId, "and conversationId:", conversationId);
+                Netomi.chat.publish('VISITOR_INFO', {
+                    visitor_id: "JWSVNJVE9SIl1d",
+                    voiceConversationId: conversationId,
+                    widgetConversationId: "WIDGET_CONVERSATION_ID"
+                });
             });
         };
     })();
